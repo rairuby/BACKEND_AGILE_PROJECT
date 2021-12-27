@@ -6,7 +6,7 @@ const router = new express.Router()
 
 // importing require libraries/files
 const bcrypt = require("bcryptjs")
-const auth = require("../middleware/auth")
+// const auth = require("../middleware/auth")
 const jwt = require("jsonwebtoken")
 const upload = require('../middleware/fileupload')
 
@@ -15,8 +15,6 @@ const Users = require('../models/userModel')
 
 // user register
 router.post('/user/register', function(req, res) {
-
-    
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
@@ -117,7 +115,7 @@ router.get("/user/get", function(req, res) {
     });
 
 // get user by id
-router.get('/user/profile', auth.verifyUser, function(req, res) {
+router.get('/user/profile',  function(req, res) {
         const id = req.userData._id;
         Users.findById(id)
             .then(function(data) {
@@ -190,7 +188,7 @@ router.delete("/user/delete/:id", function(req, res) {
     })
 
 //to upload files 
-router.put('/user/profile/upload/:id', auth.verifyUser, upload.single('myimage'), function(req, res) {
+router.put('/user/profile/upload/:id', upload.single('myimage'), function(req, res) {
     const id = req.params.id;
     Users.updateOne({
             _id: id
