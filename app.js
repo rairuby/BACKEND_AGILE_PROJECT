@@ -2,11 +2,16 @@
 const express = require ('express');
 const cors = require ('cors');
 
+const mongoose = require("mongoose");
+
 // folder name and file name
 require('./dbConnection/db')
 
 // importing routes here
 const userRoute = require('./routes/userRoute.js');
+const songRoute = require('./routes/songRoute.js');
+
+
 const path = require("path")
 const bodyParser = require("body-parser");
 
@@ -23,7 +28,7 @@ app.use("/", function(req,res,next){
 })
 app.use(cors())
 app.use(userRoute);
-
+app.use(songRoute);
 
 
 //configuring the servers
