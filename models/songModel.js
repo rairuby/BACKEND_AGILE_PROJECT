@@ -5,13 +5,15 @@ const songSchema = new Schema({
   song_id: {
     type: String,
   },
-  songpic: {
+  song_image: {
     type: String,
   },
   song_name: {
     type: String,
   },
   song_artist: {
+    type: String,
+  }, song_file:{
     type: String,
   }
 })

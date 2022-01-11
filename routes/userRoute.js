@@ -11,16 +11,19 @@ const jwt = require("jsonwebtoken")
 const upload = require('../middleware/fileupload')
 
 //importing require model
-const Users = require('../models/userModel')
+const User = require('../models/userModel')
 
 // user register
 router.post('/user/register', function(req, res) {
+   
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
+    console.log(req.body);
+    // const userType = req.body.usertype;
 
     bcrypt.hash(password, 10, function(err, hashPassword) {
-        const userData = new Users({username:username,email:email,password:hashPassword})
+        const userData = new User({username:username,email:email, password:hashPassword})
         userData.save()
             .then(function(result) {
                 console.log(userData)
@@ -42,19 +45,20 @@ router.post('/user/register', function(req, res) {
 
 //user login
 router.post('/user/login', function(req, res) {
-    //first we need username and password from client
 
+    //first we need username and password from client
+    console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
     //secondly we need to check if the user name exist or not
     //select * from user where username = rashu
-    Users.findOne({
+    User.findOne({
             email: email
         })
         .then(function(userData) {
             //all the data of rabin is now in the userData
             if (userData === null) {
-                //if the data not found. The invalid users
+                //if the data not found. The invalid User
                 return res.status(403).json({
                     message: "Invalid Login credentials"
                 })
@@ -63,9 +67,10 @@ router.post('/user/login', function(req, res) {
             //now compare the stored password with the given passsword
 
             bcrypt.compare(password, userData.password, function(err, result) {
+                
                 if (result === false) {
                     //if incorrect password
-                    console.log("What sucess")
+                
                     return res.status(403).json({
                         success: false,
                         message: "Invalid"
@@ -76,13 +81,14 @@ router.post('/user/login', function(req, res) {
                 const token = jwt.sign({
                     YourId: userData._id
                 }, 'anysecretkey')
-          
-                res.status(200).json({
+
+                console.log("efhaf")
             
+                res.status(200).json({
                     success:true,
                     message: 'Login success',
                     token: token,
-                    data: userData,
+        
                     userId: userData._id
                 })
             })
@@ -95,43 +101,19 @@ router.post('/user/login', function(req, res) {
             })
 })
 
-//fetch all users list
-router.get("/user/get", function(req, res) {
-        Users.find()
-            .then(function(data) {
-                res.status(201).json({
-                    success: true,
-                    message: "All user fetch succesfully ",
-                    data: data
-                })
-            })
-            .catch(function() {
-                res.status(500).json({
-                    success: false,
-                    message: "Error occured"
-                })
+//fetch all User list
+router.get("/user/show/:id", function (req, res) {
+    const user_id = req.params.id;
+    userModel
+      .findOne({ _id: user_id })
+      .then(function (userdata) {
+        res.send({ data: userdata, success: "true" });
+      })
+      .catch(function (err) {
+        res.status(500).json({ message: err });
+      });
+  });
 
-            })
-    });
-
-// get user by id
-router.get('/user/profile',  function(req, res) {
-        const id = req.userData._id;
-        Users.findById(id)
-            .then(function(data) {
-                res.status(200).json({
-                    success: true,
-                    message: "User fetch successfully",
-                    data: data
-                })
-            })
-            .catch(function(error) {
-                res.status(500).json({
-                    success: false,
-                    message: "Error occured" + error
-                })
-            });
-    })
 
 // to update user
 router.put('/user/update/:id', function(req, res) {
@@ -143,7 +125,7 @@ router.put('/user/update/:id', function(req, res) {
         const phone = req.body.phone
         const email = req.body.email
 
-        const updatedUser = Users.updateOne({
+        const updatedUser = User.updateOne({
                 _id: id
             }, {
                 fullname: fullname,
@@ -170,7 +152,7 @@ router.put('/user/update/:id', function(req, res) {
 router.delete("/user/delete/:id", function(req, res) {
         // console.log("Delete function");
         const id = req.params.id;
-        Users.deleteOne({
+        User.deleteOne({
                 _id: id
             })
             .then(function() {
@@ -190,7 +172,7 @@ router.delete("/user/delete/:id", function(req, res) {
 //to upload files 
 router.put('/user/profile/upload/:id', upload.single('myimage'), function(req, res) {
     const id = req.params.id;
-    Users.updateOne({
+    User.updateOne({
             _id: id
         },{
             profile: req.imageName

@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/songModel');
 //const auth = require('../middleware/auth');
-//const upload = require('../middleware/upload');
+const fileupload = require('../middleware/fileupload');
 
-router.post('/song/insert',  fileupload.single("image"), function (req, res) {
+router.post('/song/upload',  fileupload.single("image"), function (req, res) {
 
     console.log(req.body) 
     const song_name = req.body.song_name;
     const songpic = req.body.songpic;
     const song_artist = req.body.song_artist;
+    const song_file = req.body.song_file;
     
     const data = new Song({song_name:song_name, songpic : songpic, song_artist: song_artist
     
