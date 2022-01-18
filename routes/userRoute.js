@@ -19,11 +19,12 @@ router.post('/user/register', function(req, res) {
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
+    const usertype = req.body.usertype;
     console.log(req.body);
     // const userType = req.body.usertype;
 
     bcrypt.hash(password, 10, function(err, hashPassword) {
-        const userData = new User({username:username,email:email, password:hashPassword})
+        const userData = new User({username:username,email:email, password:hashPassword, userType:usertype})
         userData.save()
             .then(function(result) {
                 console.log(userData)
@@ -50,10 +51,11 @@ router.post('/user/login', function(req, res) {
     console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
+    const usertype = req.body.usertype;
     //secondly we need to check if the user name exist or not
     //select * from user where username = rashu
-    User.findOne({
-            email: email
+    User.find({
+            email: email, userType:usertype
         })
         .then(function(userData) {
             //all the data of rabin is now in the userData
@@ -104,7 +106,8 @@ router.post('/user/login', function(req, res) {
 //fetch all User list
 router.get("/user/show/:id", function (req, res) {
     const user_id = req.params.id;
-    userModel
+    console.log('Daef')
+    User
       .findOne({ _id: user_id })
       .then(function (userdata) {
         res.send({ data: userdata, success: "true" });

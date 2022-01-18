@@ -12,8 +12,6 @@ const userSchema = new mongoose.Schema({
 
     userType:{
         type:String,
-        enum:['Listener','Artist'],
-        default: 'Listener'
     },
     
    
