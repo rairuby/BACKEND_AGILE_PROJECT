@@ -1,29 +1,19 @@
 const mongoose = require("mongoose");
 
-const favSchema = new mongoose.Schema({
-  User_ID: {
+const playlistSchema = new mongoose.Schema({
+  userid: {
     type: String,
   },
-  song: [
-    {
-      song_id: {
-        type: String,
-      },
-      songpic: {
-        type: String,
-      },
-      song_name: {
-        type: String,
-      },
-      song_artist: {
-        type: String,
-      },
-    
-    },
-  ]
+  playlistname:{
+    type: String
+  },
+  song_id: {
+    type: String
+
+  }
  
 });
 
-const favaorites = mongoose.model("favorite_table", subSchema);
+const playlistModel = mongoose.model("playlist_table", playlistSchema);
 
-module.exports = favorites;
+module.exports = playlistModel;

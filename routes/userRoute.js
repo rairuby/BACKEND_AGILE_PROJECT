@@ -54,8 +54,8 @@ router.post('/user/login', function(req, res) {
     const usertype = req.body.usertype;
     //secondly we need to check if the user name exist or not
     //select * from user where username = rashu
-    User.find({
-            email: email, userType:usertype
+    User.findOne({
+            email: email
         })
         .then(function(userData) {
             //all the data of rabin is now in the userData
@@ -105,14 +105,17 @@ router.post('/user/login', function(req, res) {
 
 //fetch all User list
 router.get("/user/show/:id", function (req, res) {
+    console.log(req.body)
     const user_id = req.params.id;
-    console.log('Daef')
+   
     User
       .findOne({ _id: user_id })
       .then(function (userdata) {
-        res.send({ data: userdata, success: "true" });
+    
+        res.send({ data: userdata, success: true});
       })
       .catch(function (err) {
+       
         res.status(500).json({ message: err });
       });
   });

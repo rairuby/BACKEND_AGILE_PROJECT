@@ -10,6 +10,8 @@ require('./dbConnection/db')
 // importing routes here
 const userRoute = require('./routes/userRoute.js');
 const songRoute = require('./routes/songRoute.js');
+const favRoute = require('./routes/favoriteRoute.js');
+const playlistRoute = require('./routes/playlistRoute.js');
 
 
 const path = require("path")
@@ -29,6 +31,8 @@ app.use("/", function(req,res,next){
 app.use(cors())
 app.use(userRoute);
 app.use(songRoute);
+app.use(favRoute);
+app.use(playlistRoute);
 
 
 //configuring the servers

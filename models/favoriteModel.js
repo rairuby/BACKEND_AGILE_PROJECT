@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const favSchema = new mongoose.Schema({
-  User_ID: {
+  userid: {
     type: String,
   },
   song: [
@@ -24,6 +24,6 @@ const favSchema = new mongoose.Schema({
  
 });
 
-const favaorites = mongoose.model("favorite_table", subSchema);
+const favoritesModel = mongoose.model("favorite_table", favSchema);
 
-module.exports = favorites;
+module.exports = favoritesModel;
