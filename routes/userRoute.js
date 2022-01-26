@@ -126,10 +126,9 @@ router.put('/user/update/:id', function(req, res) {
         const id = req.params.id
         // js object de-structuring
         // const {fullname,address,phone,profilePicture} = req.body
-        const fullname = req.body.fullname
-        const address = req.body.address
-        const phone = req.body.phone
+        const username = req.body.fullname
         const email = req.body.email
+
 
         const updatedUser = User.updateOne({
                 _id: id
@@ -157,7 +156,9 @@ router.put('/user/update/:id', function(req, res) {
 //delete user
 router.delete("/user/delete/:id", function(req, res) {
         // console.log("Delete function");
+        console.log(req.body);
         const id = req.params.id;
+       
         User.deleteOne({
                 _id: id
             })
@@ -177,16 +178,23 @@ router.delete("/user/delete/:id", function(req, res) {
 
 //to upload files 
 router.put('/user/profile/upload/:id', upload.single('myimage'), function(req, res) {
+    console.log(req.body);
     const id = req.params.id;
-    User.updateOne({
+    const username = req.body.username;
+    const email = req.body.email;
+    const profile_pic = req.file.filename;    
+  
+    User.updateMany({
             _id: id
         },{
-            profile: req.imageName
+            username:username,
+            email:email,
+            profilepic: profile_pic
         })
         .then(function() {
             res.status(201).json({
                 success: true,
-                message: "Profile pic upload successfully"
+                message: "update successfully"
             })
         })
         .catch(function() {

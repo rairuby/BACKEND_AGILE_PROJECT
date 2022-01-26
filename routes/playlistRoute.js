@@ -14,12 +14,8 @@ const upload = require('../middleware/fileupload')
 const playlist = require('../models/playlistModel')
 
 router.post('/create/playlist', function (req, res) {
-
-    console.log(req.body) 
     const playlistname = req.body.playlistname;
     const userid = req.body.userid;
-
-    
     const data = new playlist({playlistname:playlistname, userid : userid
      });
     data.save()

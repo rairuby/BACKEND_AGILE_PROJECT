@@ -10,11 +10,11 @@ const songSchema = new Schema({
   },
   song_desc:{
     type: String,
-
   },
   song_artist: {
     type: String,
-  }, song_file:{
+  }, 
+  song_file:{
     type: String,
   }
 })
