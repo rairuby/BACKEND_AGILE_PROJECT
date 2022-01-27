@@ -12,6 +12,7 @@ const upload = require('../middleware/fileupload')
 
 //importing require model
 const playlist = require('../models/playlistModel')
+const playlistModel = require('../models/playlistModel')
 
 router.post('/create/playlist', function (req, res) {
     const playlistname = req.body.playlistname;
@@ -27,6 +28,16 @@ router.post('/create/playlist', function (req, res) {
             res.status(500).json({ message: err })
         })
 })
+
+router.get("/playlist/showall",function (req, res) {
+     playlistModel.find()
+      .then(function (playlistdata) {
+        res.send({ data: playlistdata, success: true });
+      })
+      .catch(function (err) {
+        res.status(500).json({ success: false });
+      });
+  });
 
 
 module.exports = router;
