@@ -32,6 +32,7 @@ router.post('/create/playlist', function (req, res) {
 router.get("/playlist/showall",function (req, res) {
      playlistModel.find()
       .then(function (playlistdata) {
+        console.log("hfefa")
         res.send({ data: playlistdata, success: true });
       })
       .catch(function (err) {

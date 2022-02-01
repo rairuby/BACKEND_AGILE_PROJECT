@@ -65,11 +65,10 @@ router.delete('/song/delete/:id', function (req, res) {
 
 
 //display
-router.get('/song/show',  function (req, res) {
+router.get('/song/showall',  function (req, res) {
     Song.find()
         .then(function (data) {
             console.log(data)
-
             res.status(201).json({ data: data, success: true });
         })
         .catch(function (err) {
