@@ -79,12 +79,12 @@ router.get('/song/showall',  function (req, res) {
 
 
 //single display code
-router.get('/song/single/:id', function (req, res) {
-    const song_id = req.params.song_id;
-
+router.get('/song/show/:id', function (req, res) {
+    const song_id = req.params.id;
     Song.findById(song_id)
         .then(function (data) {
-            res.status(200).json(data)
+            console.log(data);
+            res.status(200).json({data:data, success:true})
         })
         .catch(function (err) {
             res.status(500).json({})

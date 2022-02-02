@@ -22,7 +22,6 @@ router.post('/create/playlist', function (req, res) {
     data.save()
         .then(function (result) {
             res.status(201).json({ success: true, message: "Playlist Created" });
-
         })
         .catch(function (err) {
             res.status(500).json({ message: err })

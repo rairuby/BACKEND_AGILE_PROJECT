@@ -4,23 +4,9 @@ const favSchema = new mongoose.Schema({
   userid: {
     type: String,
   },
-  song: [
-    {
-      song_id: {
-        type: String,
-      },
-      songpic: {
-        type: String,
-      },
-      song_name: {
-        type: String,
-      },
-      song_artist: {
-        type: String,
-      },
-    
-    },
-  ]
+  songid:{
+    type:String,
+  }
  
 });
 
