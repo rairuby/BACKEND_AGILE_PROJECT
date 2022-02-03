@@ -120,6 +120,19 @@ router.get("/user/show/:id", function (req, res) {
       });
   });
 
+//artist
+router.get("/artist/showall", function (req, res) {
+User
+    .find({ userType: "Artist" })
+    .then(function (userdata) {
+    res.send({ data: userdata, success: true});
+    })
+    .catch(function (err) {
+    
+    res.status(500).json({ message: err });
+    });
+});
+
 
 // to update user
 router.put('/user/update/:id', function(req, res) {

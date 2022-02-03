@@ -61,8 +61,6 @@ router.get('/song/favorite/show/:id',  function (req, res) {
 
 router.delete('/favorite/delete/:id', function (req, res) {
     const id = req.params.id;
-  
-
     favoriteModel.deleteOne({ _id: id })
         .then(function (result) {
             res.status(201).json({ message: "Song removed!", success: true });

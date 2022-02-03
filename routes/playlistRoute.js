@@ -39,5 +39,16 @@ router.get("/playlist/showall",function (req, res) {
       });
   });
 
+router.delete('/playlist/delete/:id', function (req, res) {
+    const id = req.params.id;
+    playlistModel.deleteOne({ _id: id })
+        .then(function (result) {
+            res.status(201).json({ message: "Playlist removed!", success: true });
+
+        })
+        .catch(function (err) {
+            res.status(500).json({ message: err })
+        })
+})
 
 module.exports = router;
