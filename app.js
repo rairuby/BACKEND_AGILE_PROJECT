@@ -12,6 +12,7 @@ const userRoute = require('./routes/userRoute.js');
 const songRoute = require('./routes/songRoute.js');
 const favRoute = require('./routes/favoriteRoute.js');
 const playlistRoute = require('./routes/playlistRoute.js');
+const followRoute = require('./routes/followRoute.js');
 
 
 const path = require("path")
