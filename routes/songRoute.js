@@ -76,12 +76,24 @@ router.get('/song/showall',  function (req, res) {
         })
 })
 
+router.get('/song/search',  function (req, res) {
+ 
+    Song.find()
+        .then(function (data) {
+            console.log(data)
+            res.status(201).json({ data: data, success: true });
+        })
+        .catch(function (err) {
+            res.status(500).json({ message: err })
+        })
+})
+
 
 
 //single display code
 router.get('/song/show/:id', function (req, res) {
     const song_id = req.params.id;
-    Song.findById(song_id)
+    Song.find({_id:song_id})
         .then(function (data) {
             console.log(data);
             res.status(200).json({data:data, success:true})

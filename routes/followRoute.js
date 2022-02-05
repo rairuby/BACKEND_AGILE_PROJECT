@@ -11,25 +11,26 @@ const jwt = require("jsonwebtoken")
 const upload = require('../middleware/fileupload')
 
 //importing require model
-const User = require('../models/followModel')
+const followModel = require('../models/followModel')
 
 router.post(
-    "/artist/follow/:id",
+    "/artist/follow",
     async (req, res) => {
       console.log("fefa");
-      const userid = req.params.id;
+      const userid = req.body.userid;
       const artistid = req.body.artistid;
       try {
-        const song = await favoriteModel.findOne({ artistid: artistid });
-        if (song){
+        const follow = await followModel.findOne({ artistid: artistid });
+        if (follow){
+          console.log("alra");
             res.json({ success: "false", message: "Already followed" });
         }
         else{
-            const data = new followModel({userid:userid, artisid : songid
+            const data = new followModel({userid:userid, artistid : artistid
             });
             data.save()
         .then(function (result) {
-          
+          console.log("mhsg");    
             res.status(201).json({ success: true, message: "Artist followed" });
 
         })
@@ -43,3 +44,30 @@ router.post(
     }
     }
   );
+
+router.get("/user/artist/follow/showall/:id",function (req, res) {
+  const userid=req.params.id;
+
+    followModel.find({userid: userid})
+     .then(function (followdata) {
+       console.log(followdata)
+       res.send({ data: followdata, success: true });
+     })
+     .catch(function (err) {
+       res.status(500).json({ success: false });
+     });
+ });
+
+ 
+router.delete("/artist/unfollow/:id",function (req, res) {
+  const id=req.params.id;
+    followModel.deleteOne({_id: id})
+     .then(function (unfollowdata) {
+
+       res.send({ success: true });
+     })
+     .catch(function (err) {
+       res.status(500).json({ success: false });
+     });
+ });
+module.exports = router

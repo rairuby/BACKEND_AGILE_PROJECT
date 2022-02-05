@@ -34,6 +34,7 @@ app.use(userRoute);
 app.use(songRoute);
 app.use(favRoute);
 app.use(playlistRoute);
+app.use(followRoute);
 
 
 //configuring the servers

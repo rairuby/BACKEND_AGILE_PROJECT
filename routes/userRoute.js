@@ -62,7 +62,7 @@ router.post('/user/login', function(req, res) {
             if (userData === null) {
                 //if the data not found. The invalid User
                 return res.status(403).json({
-                    message: "Invalid Login credentials"
+                    message: "Invalid Login credentials", success: false
                 })
             }
             //valid user
@@ -103,7 +103,7 @@ router.post('/user/login', function(req, res) {
             })
 })
 
-//fetch all User list
+//fetch single User 
 router.get("/user/show/:id", function (req, res) {
     console.log(req.body)
     const user_id = req.params.id;
@@ -111,7 +111,7 @@ router.get("/user/show/:id", function (req, res) {
     User
       .findOne({ _id: user_id })
       .then(function (userdata) {
-    
+          console.log(userdata)
         res.send({ data: userdata, success: true});
       })
       .catch(function (err) {
@@ -132,6 +132,22 @@ User
     res.status(500).json({ message: err });
     });
 });
+
+router.get("/user/artist/showfromid/:id", function (req, res) {
+    console.log("agfaegea");
+    const id = req.params.id
+   
+    User
+        .find({ _id: id })
+        .then(function (userdata) {
+            console.log(userdata)
+        res.send({ data: userdata, success: true});
+        })
+        .catch(function (err) {
+        
+        res.status(500).json({ message: err });
+        });
+    });
 
 
 // to update user
@@ -172,7 +188,7 @@ router.delete("/user/delete/:id", function(req, res) {
         console.log(req.body);
         const id = req.params.id;
        
-        User.deleteOne({
+        User.delete({
                 _id: id
             })
             .then(function() {
