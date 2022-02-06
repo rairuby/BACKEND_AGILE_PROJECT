@@ -10,12 +10,15 @@ const songSchema = new Schema({
   },
   song_desc:{
     type: String,
+    default:"",
   },
   song_artist: {
     type: String,
   }, 
   song_file:{
     type: String,
+  }, song_lyrics:{
+    type: String
   }
 })
 

@@ -12,8 +12,8 @@ router.post('/song/upload',  fileupload.array("myfile"), function (req, res) {
     console.log(req.body);
     const image_file = req.files[0].filename;
     const song_file = req.files[1].filename;
-    const data = new Song({song_name:song_name, song_artist: song_artist, song_desc:song_desc, song_file:song_file, song_image : image_file,
-    
+    const lyrics_file = req.files[2].filename;
+    const data = new Song({song_name:song_name, song_artist: song_artist, song_desc:song_desc, song_file:song_file, song_image : image_file, song_lyrics: lyrics_file
      });
     data.save()
         .then(function (result) {
@@ -21,7 +21,7 @@ router.post('/song/upload',  fileupload.array("myfile"), function (req, res) {
 
         })
         .catch(function (err) {
-            res.status(500).json({ message: err })
+            res.status(500).json({ message: err, success: false })
         })
 })
 
