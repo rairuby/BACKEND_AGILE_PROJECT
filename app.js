@@ -13,6 +13,7 @@ const songRoute = require('./routes/songRoute.js');
 const favRoute = require('./routes/favoriteRoute.js');
 const playlistRoute = require('./routes/playlistRoute.js');
 const followRoute = require('./routes/followRoute.js');
+const albumRoute = require('./routes/albumRoute.js');
 
 
 const path = require("path")
@@ -35,6 +36,7 @@ app.use(songRoute);
 app.use(favRoute);
 app.use(playlistRoute);
 app.use(followRoute);
+app.use(albumRoute);
 
 
 //configuring the servers

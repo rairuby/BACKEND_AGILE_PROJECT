@@ -19,13 +19,18 @@ router.post(
       console.log("fefa");
       const userid = req.body.userid;
       const artistid = req.body.artistid;
+      console.log(userid);
+      console.log(req.body);
+  
       try {
-        const follow = await followModel.findOne({ artistid: artistid });
+        const follow = await followModel.find({ userid: userid, artistid: artistid });
+        console.log(follow);
         if (follow){
           console.log("alra");
-            res.json({ success: "false", message: "Already followed" });
+            res.json({ success: false, message: "Already followed" });
         }
         else{
+          console.log("hfahufh");
             const data = new followModel({userid:userid, artistid : artistid
             });
             data.save()
@@ -35,6 +40,7 @@ router.post(
 
         })
         .catch(function (err) {
+          console.log(err);
             res.status(500).json({ message: err })
         })
         }

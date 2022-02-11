@@ -75,7 +75,7 @@ router.post('/user/login', function(req, res) {
                 
                     return res.status(403).json({
                         success: false,
-                        message: "Invalid"
+                        message: "Invalid login"
                     })
                 }
                 //both username and password is correct
@@ -120,6 +120,22 @@ router.get("/user/show/:id", function (req, res) {
       });
   });
 
+
+router.delete("/user/delete/:id", function (req, res) {
+    const user_id = req.params.id;
+    User
+      .deleteOne({ _id: user_id })
+      .then(function (userdata) {
+    
+        res.send({ success: true});
+      })
+      .catch(function (err) {
+       
+        res.status(500).json({ success: false });
+      });
+  });
+
+
 //artist
 router.get("/artist/showall", function (req, res) {
 User
@@ -152,34 +168,30 @@ router.get("/user/artist/showfromid/:id", function (req, res) {
 
 // to update user
 router.put('/user/update/:id', function(req, res) {
-        const id = req.params.id
-        // js object de-structuring
-        // const {fullname,address,phone,profilePicture} = req.body
-        const username = req.body.fullname
-        const email = req.body.email
+    console.log(req.body);
+        const id = req.params.id;
+        const username = req.body.username;
+        const email = req.body.email;
 
+        User.updateOne({
+            _id: id
+        },{
+            username:username,
+            email:email,
+        })
+        .then(function() {
+            res.status(201).json({
+                success: true,
+                message: "update successfully!"
+            })
+        })
+        .catch(function() {
+            res.status(500).json({
+                success: false,
+                message: "Invalid update"
+            })
 
-        const updatedUser = User.updateOne({
-                _id: id
-            }, {
-                fullname: fullname,
-                address: address,
-                phone: phone,
-                email: email
-            })
-            .then(function() {
-                res.status(201).json({
-                    success: true,
-                    message: "Profile updated successfully",
-                    data:updatedUser
-                })
-            })
-            .catch(function() {
-                res.status(500).json({
-                    success: false,
-                    message: "Error occured"
-                })
-            })
+         })
     })
 
 //delete user
@@ -208,12 +220,13 @@ router.delete("/user/delete/:id", function(req, res) {
 //to upload files 
 router.put('/user/profile/upload/:id', upload.single('myimage'), function(req, res) {
     console.log(req.body);
+    
     const id = req.params.id;
     const username = req.body.username;
     const email = req.body.email;
     const profile_pic = req.file.filename;    
   
-    User.updateMany({
+    User.updateOne({
             _id: id
         },{
             username:username,
